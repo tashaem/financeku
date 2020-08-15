@@ -16,25 +16,21 @@ from django.http import JsonResponse
 def categorize(request):
     try:
         personal_finances = Finance.objects.get(user=request.user)
-        percentages = Percentages.objects.get(user=request.user)
+        percentages = Percentages.objects.get(id=1)
     except:
         personal_finances = None
         percentages = None
 
     if request.method == "POST":
-        if 'income' in request.POST:
-            income = request.POST["income"]
+        income = Decimal(request.POST["income"])
 
-            if personal_finances == None:
-                income1 = Finance(user=request.user, income=income)
-                income1.save()
+        if personal_finances == None:
+            income1 = Finance(user=request.user, income=income)
+            income1.save()
+        else:
+            personal_finances.income = income
+            personal_finances.save()
         
-        if 'update_p' in request.POST:  
-            tax_p = request.POST["tax_p"]
-            emergency_p = request.POST["emergency_p"]
-            insurance_p = request.POST["insurance_p"]
-            pension_p = request.POST["pension_p"]
-            spending_p = request.POST["spending_p"]
             
         
 
@@ -43,7 +39,7 @@ def categorize(request):
     emergency_p = percentages.emergency
     insurance_p = percentages.insurance
     pension_p = percentages.pension
-    spending_p = Decimal(1-tax_p -emergency_p-insurance_p-pension_p)
+    spending_p = Decimal(1- tax_p -emergency_p -insurance_p -pension_p)
     
 
     # Calculating respective categories
