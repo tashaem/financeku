@@ -1,0 +1,23 @@
+{% extends "finance/layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <form action="{% url 'categorize' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-3">    
+                    <input type="text" placeholder="Your monthly income" class="form-control" name="income">
+                </div>
+                <div class="col-9">    
+                    <button class="btn btn-outline-primary">Enter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <form action="{% url 'logoutpage' %}">
+        {% csrf_token %}
+            <button class="btn btn-primary">Log Out</button>
+        </form>
+    </div>
+{% endblock %}
