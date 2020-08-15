@@ -1,8 +1,48 @@
 {% extends "finance/layout.html" %}
+{% load static %}
 
 {% block body %}
     <div class="container">
         <h1>Hi, {{user}}!</h1>
-        <div>{{ finances.income }}</div>
+        <div class="container">
+            <h4>Your percentages</h4>
+            Tax: <span class="percent">{{ percentages.tax_rate }}</span></br>
+            Emergency: <span class="percent">{{percentages.emergency}}</span></br>
+            Insurance: <span class="percent">{{percentages.insurance}}</span></br>
+            Pension: <span class="percent">{{percentages.pension}}</span></br>
+            Spending: <span class="percent">{{percentages.spending}}</span></br>
+
+            <form action="{% url 'categorize' %}" id="btnform">
+                {% csrf_token %}
+                <!--<input type="text" placeholder="Tax" class="form-control" name="tax_p">
+                <input type="text" placeholder="Emergency" class="form-control" name="emergency_p">
+                <input type="text" placeholder="Insurance" class="form-control" name="insurance_p">
+                <input type="text" placeholder="Pension" class="form-control" name="pension_p">
+                <input type="text" placeholder="Spending" class="form-control" name="spending_p">-->
+                <button class="btn btn-outline-dark btn-sm" id="editbtn">Edit</button>
+                <button class="btn btn-dark btn-sm" id="savebtn">Save</button>
+            </form>
+        </div>
+
+        <div class="container">
+            <h4>Your finances</h4>
+            Income: Rp{{ finances.income }}</br>
+            Tax: Rp{{finances.tax}} </br>
+            Emergency: Rp{{finances.emergency}}</br>
+            Insurance: Rp{{finances.insurance}}</br>
+            Pension: Rp{{finances.pension}}</br>
+            Spending: Rp{{finances.spending}}
+        </div>
+        <div class="container">
+            <form action="{% url 'logoutpage' %}">
+            {% csrf_token %}
+                <button class="btn btn-primary">Log Out</button>
+            </form>
+        </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'finance/edit.js' %}">
+    </script>
 {% endblock %}
