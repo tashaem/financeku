@@ -133,4 +133,4 @@ def register(request):
         except IntegrityError:
             return render(request, "finance/error.html")
 
-    return render(request, "finance/register.html")
+    return render(request, "finance/login.html")
